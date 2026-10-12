@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Analysis Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f8;
+            margin: 0;
+            padding: 30px 15px;
+            color: #25233a;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: auto;
+        }
+
+        .header, .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: #4936a5;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 19px;
+            margin-top: 0;
+        }
+
+        .score {
+            font-size: 42px;
+            font-weight: bold;
+            color: #4936a5;
+        }
+
+        .progress {
+            height: 12px;
+            background: #e8e6f5;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .bar {
+            height: 100%;
+            width: {{ score }}%;
+            background: #6c5ce7;
+            border-radius: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 20px;
+            margin: 5px 5px 5px 0;
+            font-size: 14px;
+        }
+
+        .matched {
+            background: #d9f7e8;
+            color: #176b45;
+        }
+
+        .missing {
+            background: #ffe3e3;
+            color: #a12626;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .note {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 18px;
+            background: #4936a5;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Resume Analyzer</h1>
+            <p>Your resume analysis is complete.</p>
+        </div>
+
+        <div class="card">
+            <h2>Resume Match Score</h2>
+            <div class="score">{{ score }}%</div>
+            <div class="progress">
+                <div class="bar"></div>
+            </div>
+            <p class="note">
+                Based on detected skills shared with the job description.
+                This is not a hiring prediction.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>Matching Skills</h2>
+            {% if matched_skills %}
+                {% for skill in matched_skills %}
+                    <span class="tag matched">{{ skill }}</span>
+                {% endfor %}
+            {% else %}
+                <p>No matching skills detected.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>Skills to Improve</h2>
+            {% if missing_skills %}
+                {% for skill in missing_skills %}
+                    <span class="tag missing">{{ skill }}</span>
+                {% endfor %}
+            {% else %}
+                <p>No missing skills detected from our skill list.</p>
+            {% endif %}
+        </div>
+
+        <div class="card">
+            <h2>Suggestions</h2>
+            <ul>
+                {% for suggestion in suggestions %}
+                    <li>{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <a class="button" href="/">Analyze Another Resume</a>
+    </div>
+</body>
+</html>
